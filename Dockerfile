@@ -15,8 +15,8 @@ WORKDIR /hytale
 # -------------------------------
 # Copy start script and make executable as root
 # -------------------------------
-COPY start.sh /hytale/start.sh
-RUN chmod +x /hytale/start.sh
+COPY start.sh /usr/local/bin/hytale-start
+RUN chmod +x /usr/local/bin/hytale-start
 
 # -------------------------------
 # Download Hytale Downloader CLI
@@ -24,8 +24,8 @@ RUN chmod +x /hytale/start.sh
 RUN wget -O hytale-downloader.zip https://downloader.hytale.com/hytale-downloader.zip && \
     unzip hytale-downloader.zip && \
     rm hytale-downloader.zip && \
-    mv hytale-downloader-linux-amd64 hytale-downloader && \
-    chmod +x hytale-downloader
+    mv hytale-downloader-linux-amd64 /usr/local/bin/hytale-downloader && \
+    chmod +x /usr/local/bin/hytale-downloader
 
 # -------------------------------
 # Create non-root user and switch
@@ -57,8 +57,5 @@ ENV DISABLE_SENTRY="false"
 # Expose server port
 EXPOSE 5520/udp
 
-# Volume for persistent server data
-VOLUME ["/hytale/Server"]
-
 # Start the server
-ENTRYPOINT ["/hytale/start.sh"]
+ENTRYPOINT ["/usr/local/bin/hytale-start"]
