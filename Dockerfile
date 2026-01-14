@@ -9,14 +9,13 @@ RUN apt-get update && \
       wget unzip curl bash ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
+RUN useradd -m -d /hytale -u 1000 hytale
+
 # Set working directory
 WORKDIR /hytale
 
-RUN useradd -m -d /hytale -u 1000 hytale
-
-COPY --chown=hytale:hytale start.sh /hytale/start.sh
-
-RUN chmod +x /hytale/start.sh
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
 # -------------------------------
 RUN wget -O hytale-downloader.zip https://downloader.hytale.com/hytale-downloader.zip && \
@@ -31,7 +30,7 @@ RUN wget -O hytale-downloader.zip https://downloader.hytale.com/hytale-downloade
 RUN mkdir -p /hytale/Server /hytale/backups && \
     chown -R hytale:hytale /hytale
 
-USER hytale
+#USER hytale
 WORKDIR /hytale
 
 # -------------------------------
@@ -55,4 +54,4 @@ ENV DISABLE_SENTRY="false"
 EXPOSE 5520/udp
 
 # Start the server
-ENTRYPOINT ["/hytale/start.sh"]
+ENTRYPOINT ["/usr/local/bin/start.sh"]
