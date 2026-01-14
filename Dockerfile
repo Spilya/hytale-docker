@@ -15,8 +15,8 @@ WORKDIR /hytale
 # -------------------------------
 # Copy start script and make executable as root
 # -------------------------------
-COPY start.sh /usr/local/bin/hytale-start
-RUN chmod +x /usr/local/bin/hytale-start
+COPY start.sh /hytale/start.sh 
+RUN chmod +x start.sh 
 
 # -------------------------------
 # Download Hytale Downloader CLI
@@ -58,4 +58,4 @@ ENV DISABLE_SENTRY="false"
 EXPOSE 5520/udp
 
 # Start the server
-ENTRYPOINT ["/usr/local/bin/hytale-start"]
+ENTRYPOINT ["/hytale/start.sh"]
