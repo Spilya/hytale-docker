@@ -3,6 +3,7 @@ services:
     image: ghcr.io/slowline/hytale-docker
     build: .
     container_name: hytale
+    user: "0:0"
     stdin_open: true
     tty: true
     ports:
