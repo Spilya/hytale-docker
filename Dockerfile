@@ -12,14 +12,12 @@ RUN apt-get update && \
 # Set working directory
 WORKDIR /hytale
 
-# -------------------------------
-# Copy start script and make executable as root
-# -------------------------------
-COPY start.sh /hytale/start.sh 
-RUN chmod +x start.sh 
+RUN useradd -m -d /hytale -u 1000 hytale
 
-# -------------------------------
-# Download Hytale Downloader CLI
+COPY --chown=hytale:hytale start.sh /hytale/start.sh
+
+RUN chmod +x /hytale/start.sh
+
 # -------------------------------
 RUN wget -O hytale-downloader.zip https://downloader.hytale.com/hytale-downloader.zip && \
     unzip hytale-downloader.zip && \
@@ -30,11 +28,10 @@ RUN wget -O hytale-downloader.zip https://downloader.hytale.com/hytale-downloade
 # -------------------------------
 # Create non-root user and switch
 # -------------------------------
-RUN useradd -m -d /hytale -u 1000 hytale && \
-    mkdir -p /hytale/Server /hytale/backups && \
+RUN mkdir -p /hytale/Server /hytale/backups && \
     chown -R hytale:hytale /hytale
 
-USER root
+USER hytale
 WORKDIR /hytale
 
 # -------------------------------
