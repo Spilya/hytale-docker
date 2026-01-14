@@ -54,4 +54,4 @@ ENV DISABLE_SENTRY="false"
 EXPOSE 5520/udp
 
 # Start the server
-ENTRYPOINT ["/usr/local/bin/start.sh"]
+ENTRYPOINT ["/hytale/start.sh"]
